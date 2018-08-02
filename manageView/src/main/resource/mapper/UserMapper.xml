@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.springBoot.manageView.service.mybaties.UserMapper">
+
+    <resultMap type="com.test.springBoot.manageApi.entity.TUser" id="userMap">
+        <result column="id" property="id"></result>
+        <result column="loginName" property="loginName"></result>
+        <result column="eamil" property="email"></result>
+        <result column="gender" property="gender"></result>
+        <result column="name" property="name"></result>
+        <result column="old" property="old"></result>
+        <result column="tel" property="tel"></result>
+    </resultMap>
+
+
+    <insert id="saveUser" parameterType="com.test.springBoot.manageApi.conditionEntity.UserCondition">
+
+      insert into T_USER (ID,NAME,OLD,EAMIL,GENDER,TEL,LOGINNAME,PASSWORD,CREATNAME,CREATTIME,UPDATENAME,UPDATETIME,DELETEFLAG,SEQ)
+
+      values (#{id},#{name},#{old},#{email},#{gender},#{tel},#{loginName},#{passWord},#{creatName},#{creatTime},#{updateName},#{updateTime},#{deleteFlag},#{seq})
+
+    </insert>
+
+    <insert id="update" parameterType="com.test.springBoot.manageApi.conditionEntity.UserCondition">
+
+     update T_USER set OLD = #{OLD},
+                         EMAIL = #{EMAIL},
+                         GENDER = #{GENDER},
+                         TEL = #{TEL},
+                         LOGINNAME = #{LOGINNAME},
+                         PASSWORD = #{PASSWORD},
+                         UPDATENAME = #{UPDATENAME},
+                         UPDATETIME = #{UPDATETIME}
+
+    </insert>
+
+
+    <select id="getUserByLoginName" parameterType="com.test.springBoot.manageApi.conditionEntity.UserCondition" resultType="com.test.springBoot.manageApi.entity.TUser">
+        select * from T_USER where loginName = #{loginName}
+    </select>
+
+    <select id="deleteUserById" parameterType="String" resultType="java.lang.Integer">
+      delete from T_USER where id = #{id}
+    </select>
+
+    <select id="getUserListByCondition" parameterType="Map" resultMap="userMap">
+
+        select * from T_USER WHERE DELETEFLAG = 0
+
+        order by seq asc
+
+        limit #{limit}, #{pageSize}
+
+    </select>
+
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map">
+        select COUNT(*) from T_USER where DELETEFLAG = 0
+    </select>
+
+
+    <select id="getMaxSeq" resultType="java.lang.Integer">
+        select MAX(SEQ) from T_USER where DELETEFLAG = 0
+    </select>
+</mapper>

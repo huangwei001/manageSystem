@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="include :: head">
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+
+
+<button id="userList"  data-toggle="modal" class="btn btn-primary" data-target="#myModal">用户列表</button>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+
+        $(document).ready(function () {
+            $("#userList").click(function () {
+                window.location.href = "/jump/getUserList";
+            });
+        })
+</script>
+</body>
+</html>

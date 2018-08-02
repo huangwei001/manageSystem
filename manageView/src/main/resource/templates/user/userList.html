@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="include :: head">
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+</head>
+
+<button id="addUser"  data-toggle="modal" class="btn btn-primary" data-target="#myModal">新增用户</button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="myModalLabel">
+                   新增用户
+                </h4>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <th>用户名:</th>
+                        <td><input type="text"></td>
+                        <th>密码:</th>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <th>真实姓名:</th>
+                        <td><input type="text"></td>
+                        <th>年龄:</th>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <th>电话:</th>
+                        <td><input type="text"></td>
+                        <th>邮箱:</th>
+                        <td><input type="text"></td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="add">
+                    提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<table id="userTable" data-toggle="table"></table>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+
+
+    $(document).ready(function () {
+        $("#add").click(function () {
+            $.ajax({
+                url : "/user/saveUser",
+                type : "POST",
+                data : JSON.stringify({
+                    name : "aaa",
+                    loginName : "aaa",
+                    passWord : "aaa"
+                }),
+                contentType : "application/json",
+                success :function (result) {
+                    if (result == "true") {
+                        window.top.location = "/jump/getUserList"
+                    }
+                },
+                error : function (result) {
+
+                }
+
+            });
+        });
+        var oTable = new TableInit();
+        oTable.Init();
+    })
+
+
+    var TableInit = function () {
+        var oTableInit = new Object();
+        oTableInit.Init = function () {
+            $("#userTable").bootstrapTable("destroy");
+            $("#userTable").bootstrapTable({
+                url : "/user/getUser",
+                method: 'POST', //请求方式（*）
+                contentType: 'application/json',
+                toolbar : "#toolbar",
+                pagination: true,                   //是否显示分页（*）
+                sortable: false,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParamsType: "limit",
+                queryParams: oTableInit.queryParams,//传递参数（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                columns: [{
+                    field : "seq",
+                    title : "排序"
+                },
+                    {
+                    field : "name",
+                    title : "姓名"
+                },{
+                    field : "loginName",
+                    title : "登录名"
+                },{
+                    field : "old",
+                    title : "年龄"
+                },{
+                    field : "email",
+                    title : "邮箱"
+                },{
+                    field : "tel",
+                    title : "电话"
+                }]
+
+            });
+        };
+
+        oTableInit.queryParams = function (params) {
+            var temp = {
+                pageSize : params.limit,
+                currentPage : params.offset
+            };
+            return JSON.stringify(temp);
+        };
+        return oTableInit;
+    };
+
+
+</script>
+</body>
+</html>

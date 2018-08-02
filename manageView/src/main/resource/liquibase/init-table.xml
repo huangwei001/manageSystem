@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="manageSystem_01" author="huangwei" context="base">
+
+        <sql>
+
+            CREATE TABLE `T_USER`
+            (
+            `ID` VARCHAR(36) NOT NULL COMMENT '主键',
+            `NAME` VARCHAR(50) NOT NULL COMMENT '姓名',
+            `OLD` BIGINT(50) COMMENT '年龄',
+            `SEQ` BIGINT(50) COMMENT '排序',
+            `EAMIL` VARCHAR(100) COMMENT '邮箱',
+            `GENDER` VARCHAR(10) COMMENT '性别',
+            `TEL` VARCHAR(36)  COMMENT '电话',
+            `LOGINNAME` VARCHAR(50) NOT NULL COMMENT '登录名',
+            `PASSWORD` VARCHAR(50) NOT NULL COMMENT '密码',
+            `CREATNAME` VARCHAR(50) COMMENT '创建人',
+            `CREATTIME` BIGINT(100) COMMENT '创建时间',
+            `UPDATENAME` VARCHAR(50)COMMENT '修改人',
+            `UPDATETIME` BIGINT(100) COMMENT '修改时间',
+            `DELETEFLAG` BIGINT(1) COMMENT '删除标记'
+            );
+
+        </sql>
+
+
+
+
+
+
+    </changeSet>
+</databaseChangeLog>
