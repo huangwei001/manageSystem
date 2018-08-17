@@ -9,9 +9,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class JumpControllor {
 
+    //用户页面跳转
     @RequestMapping(value = "/getUserList", method = RequestMethod.GET)
     public String getList() throws Exception {
         return "user/userList";
+    }
+    //资源页面跳转
+    @RequestMapping(value = "getResourceList", method = RequestMethod.GET)
+    public String getResourceList() throws Exception {
+        return "resource/resourceList";
     }
 
 

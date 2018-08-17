@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.springBoot.manageView.service.mybaties.ResourceMapper">
+
+    <resultMap id="resourceMap" type="com.test.springBoot.manageApi.entity.TResource">
+        <result column="RESOURCE_NAME" property="resourceName"></result>
+        <result column="PARENT_RSOURCE_ID" property="parentRsourceId"></result>
+        <result column="PARENT_RESOURCE_NAME" property="parentResourceName"></result>
+        <result column="ISAVAILABLE" property="isAvailable"></result>
+        <result column="RESOURCE_TYPE" property="resourceType"></result>
+        <result column="RESOURCE_URL" property="resourceUrl"></result>
+        <result column="RESOURCE_CODE" property="resourceCode"></result>
+
+    </resultMap>
+
+    <insert id="saveResource" parameterType="com.test.springBoot.manageApi.conditionEntity.ResourceCondition">
+      insert into T_RESOURCE (ID,RESOURCE_NAME,PARENT_RSOURCE_ID,PARENT_RESOURCE_NAME,ISAVAILABLE,RESOURCE_TYPE,RESOURCE_URL,RESOURCE_CODE,CREATNAME,CREATTIME,UPDATENAME,UPDATETIME,DELETEFLAG)
+        values (#{id},#{resourceName},#{parentRsourceId},#{parentResourceName},#{isAvailable},#{resourceType},#{resourceUrl},#{resourceCode},#{creatName},#{creatTime},#{updateName},#{updateTime},#{deleteFlag})
+    </insert>
+
+    <select id="getPageResourceByCondition" parameterType="com.test.springBoot.manageApi.conditionEntity.ResourceCondition" resultMap="resourceMap">
+        select * from T_RESOURCE  where deleteFlag = 0
+        <if test="parentRsourceId != null and parentRsourceId != ''">
+            and PARENT_RSOURCE_ID = #{parentRsourceId}
+        </if>
+        limit #{limit}, #{pageSize}
+    </select>
+
+    <update id="updateResource" parameterType="com.test.springBoot.manageApi.conditionEntity.ResourceCondition">
+
+    </update>
+
+    <delete id="deleteResource" parameterType="String">
+        delete from T_RESOURCE where id =#{id}
+    </delete>
+
+    <select id="selectResource" resultMap="resourceMap">
+        select * from T_RESOURCE where deleteFlag = 0
+    </select>
+</mapper>

@@ -9,7 +9,6 @@
     <changeSet id="manageSystem_01" author="huangwei" context="base">
 
         <sql>
-
             CREATE TABLE `T_USER`
             (
             `ID` VARCHAR(36) NOT NULL COMMENT '主键',
@@ -21,6 +20,34 @@
             `TEL` VARCHAR(36)  COMMENT '电话',
             `LOGINNAME` VARCHAR(50) NOT NULL COMMENT '登录名',
             `PASSWORD` VARCHAR(50) NOT NULL COMMENT '密码',
+            `CREATNAME` VARCHAR(50) COMMENT '创建人',
+            `CREATTIME` BIGINT(100) COMMENT '创建时间',
+            `UPDATENAME` VARCHAR(50)COMMENT '修改人',
+            `UPDATETIME` BIGINT(100) COMMENT '修改时间',
+            `DELETEFLAG` BIGINT(1) COMMENT '删除标记'
+            );
+
+            CREATE TABLE `T_ROLE`
+            (
+            `ID` VARCHAR(36) NOT NULL COMMENT '主键',
+            `NAME` VARCHAR(50) NOT NULL COMMENT '角色名称',
+            `CREATNAME` VARCHAR(50) COMMENT '创建人',
+            `CREATTIME` BIGINT(100) COMMENT '创建时间',
+            `UPDATENAME` VARCHAR(50)COMMENT '修改人',
+            `UPDATETIME` BIGINT(100) COMMENT '修改时间',
+            `DELETEFLAG` BIGINT(1) COMMENT '删除标记'
+            );
+
+            CREATE TABLE `T_RESOURCE`
+            (
+            `ID` VARCHAR(36) COMMENT '主键',
+            `RESOURCE_NAME` VARCHAR(50) COMMENT '资源名称',
+            `PARENT_RSOURCE_ID` VARCHAR(50) COMMENT '资源菜单ID',
+            `PARENT_RESOURCE_NAME` VARCHAR(50) COMMENT '上级资源名称(冗余字段)',
+            `ISAVAILABLE` VARCHAR(50) COMMENT '启用状态',
+            `RESOURCE_TYPE` VARCHAR(50) COMMENT '资源类型',
+            `RESOURCE_URL` VARCHAR(50) COMMENT '请求地址',
+            `RESOURCE_CODE` VARCHAR(50) COMMENT '资源编码',
             `CREATNAME` VARCHAR(50) COMMENT '创建人',
             `CREATTIME` BIGINT(100) COMMENT '创建时间',
             `UPDATENAME` VARCHAR(50)COMMENT '修改人',

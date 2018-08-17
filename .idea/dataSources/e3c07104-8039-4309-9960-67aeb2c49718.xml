@@ -814,193 +814,317 @@
     </collation>
     <table id="204" parent="3" name="databasechangelog"/>
     <table id="205" parent="3" name="databasechangeloglock"/>
-    <table id="206" parent="3" name="t_user"/>
-    <column id="207" parent="204" name="ID">
+    <table id="206" parent="3" name="t_resource"/>
+    <table id="207" parent="3" name="t_role"/>
+    <table id="208" parent="3" name="t_user"/>
+    <column id="209" parent="204" name="ID">
       <Position>1</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="208" parent="204" name="AUTHOR">
+    <column id="210" parent="204" name="AUTHOR">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="209" parent="204" name="FILENAME">
+    <column id="211" parent="204" name="FILENAME">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="210" parent="204" name="DATEEXECUTED">
+    <column id="212" parent="204" name="DATEEXECUTED">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="211" parent="204" name="ORDEREXECUTED">
+    <column id="213" parent="204" name="ORDEREXECUTED">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="212" parent="204" name="EXECTYPE">
+    <column id="214" parent="204" name="EXECTYPE">
       <Position>6</Position>
       <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="213" parent="204" name="MD5SUM">
+    <column id="215" parent="204" name="MD5SUM">
       <Position>7</Position>
       <DataType>varchar(35)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="214" parent="204" name="DESCRIPTION">
+    <column id="216" parent="204" name="DESCRIPTION">
       <Position>8</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="215" parent="204" name="COMMENTS">
+    <column id="217" parent="204" name="COMMENTS">
       <Position>9</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="216" parent="204" name="TAG">
+    <column id="218" parent="204" name="TAG">
       <Position>10</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="217" parent="204" name="LIQUIBASE">
+    <column id="219" parent="204" name="LIQUIBASE">
       <Position>11</Position>
       <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="218" parent="204" name="CONTEXTS">
+    <column id="220" parent="204" name="CONTEXTS">
       <Position>12</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="219" parent="204" name="LABELS">
+    <column id="221" parent="204" name="LABELS">
       <Position>13</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="220" parent="204" name="DEPLOYMENT_ID">
+    <column id="222" parent="204" name="DEPLOYMENT_ID">
       <Position>14</Position>
       <DataType>varchar(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="221" parent="205" name="ID">
+    <column id="223" parent="205" name="ID">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="222" parent="205" name="LOCKED">
+    <column id="224" parent="205" name="LOCKED">
       <Position>2</Position>
       <DataType>bit(1)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="223" parent="205" name="LOCKGRANTED">
+    <column id="225" parent="205" name="LOCKGRANTED">
       <Position>3</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="224" parent="205" name="LOCKEDBY">
+    <column id="226" parent="205" name="LOCKEDBY">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="225" parent="205" name="PRIMARY">
+    <key id="227" parent="205" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="226" parent="206" name="ID">
+    <column id="228" parent="206" name="ID">
+      <Position>1</Position>
+      <Comment>主键</Comment>
+      <DataType>varchar(36)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="229" parent="206" name="RESOURCE_NAME">
+      <Position>2</Position>
+      <Comment>资源名称</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="230" parent="206" name="PARENT_RSOURCE_ID">
+      <Position>3</Position>
+      <Comment>资源菜单ID</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="231" parent="206" name="PARENT_RESOURCE_NAME">
+      <Position>4</Position>
+      <Comment>上级资源名称(冗余字段)</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="232" parent="206" name="ISAVAILABLE">
+      <Position>5</Position>
+      <Comment>启用状态</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="233" parent="206" name="RESOURCE_TYPE">
+      <Position>6</Position>
+      <Comment>资源类型</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="234" parent="206" name="RESOURCE_URL">
+      <Position>7</Position>
+      <Comment>请求地址</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="235" parent="206" name="RESOURCE_CODE">
+      <Position>8</Position>
+      <Comment>资源编码</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="236" parent="206" name="CREATNAME">
+      <Position>9</Position>
+      <Comment>创建人</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="237" parent="206" name="CREATTIME">
+      <Position>10</Position>
+      <Comment>创建时间</Comment>
+      <DataType>bigint(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="238" parent="206" name="UPDATENAME">
+      <Position>11</Position>
+      <Comment>修改人</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="239" parent="206" name="UPDATETIME">
+      <Position>12</Position>
+      <Comment>修改时间</Comment>
+      <DataType>bigint(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="240" parent="206" name="DELETEFLAG">
+      <Position>13</Position>
+      <Comment>删除标记</Comment>
+      <DataType>bigint(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="241" parent="207" name="ID">
       <Position>1</Position>
       <Comment>主键</Comment>
       <DataType>varchar(36)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="227" parent="206" name="NAME">
+    <column id="242" parent="207" name="NAME">
+      <Position>2</Position>
+      <Comment>角色名称</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="243" parent="207" name="CREATNAME">
+      <Position>3</Position>
+      <Comment>创建人</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="244" parent="207" name="CREATTIME">
+      <Position>4</Position>
+      <Comment>创建时间</Comment>
+      <DataType>bigint(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="245" parent="207" name="UPDATENAME">
+      <Position>5</Position>
+      <Comment>修改人</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="246" parent="207" name="UPDATETIME">
+      <Position>6</Position>
+      <Comment>修改时间</Comment>
+      <DataType>bigint(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="247" parent="207" name="DELETEFLAG">
+      <Position>7</Position>
+      <Comment>删除标记</Comment>
+      <DataType>bigint(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="248" parent="208" name="ID">
+      <Position>1</Position>
+      <Comment>主键</Comment>
+      <DataType>varchar(36)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="249" parent="208" name="NAME">
       <Position>2</Position>
       <Comment>姓名</Comment>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="228" parent="206" name="OLD">
+    <column id="250" parent="208" name="OLD">
       <Position>3</Position>
       <Comment>年龄</Comment>
       <DataType>bigint(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="229" parent="206" name="SEQ">
+    <column id="251" parent="208" name="SEQ">
       <Position>4</Position>
       <Comment>排序</Comment>
       <DataType>bigint(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="230" parent="206" name="EAMIL">
+    <column id="252" parent="208" name="EAMIL">
       <Position>5</Position>
       <Comment>邮箱</Comment>
       <DataType>varchar(100)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="231" parent="206" name="GENDER">
+    <column id="253" parent="208" name="GENDER">
       <Position>6</Position>
       <Comment>性别</Comment>
       <DataType>varchar(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="232" parent="206" name="TEL">
+    <column id="254" parent="208" name="TEL">
       <Position>7</Position>
       <Comment>电话</Comment>
       <DataType>varchar(36)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="233" parent="206" name="LOGINNAME">
+    <column id="255" parent="208" name="LOGINNAME">
       <Position>8</Position>
       <Comment>登录名</Comment>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="234" parent="206" name="PASSWORD">
+    <column id="256" parent="208" name="PASSWORD">
       <Position>9</Position>
       <Comment>密码</Comment>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="235" parent="206" name="CREATNAME">
+    <column id="257" parent="208" name="CREATNAME">
       <Position>10</Position>
       <Comment>创建人</Comment>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="236" parent="206" name="CREATTIME">
+    <column id="258" parent="208" name="CREATTIME">
       <Position>11</Position>
       <Comment>创建时间</Comment>
       <DataType>bigint(100)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="237" parent="206" name="UPDATENAME">
+    <column id="259" parent="208" name="UPDATENAME">
       <Position>12</Position>
       <Comment>修改人</Comment>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="238" parent="206" name="UPDATETIME">
+    <column id="260" parent="208" name="UPDATETIME">
       <Position>13</Position>
       <Comment>修改时间</Comment>
       <DataType>bigint(100)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="239" parent="206" name="DELETEFLAG">
+    <column id="261" parent="208" name="DELETEFLAG">
       <Position>14</Position>
       <Comment>删除标记</Comment>
       <DataType>bigint(1)|0s</DataType>

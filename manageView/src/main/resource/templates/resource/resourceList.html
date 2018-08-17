@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="include :: head">
+    <meta charset="UTF-8">
+    <title>菜单列表</title>
+</head>
+<body>
+<button id="addUser"  data-toggle="modal" class="btn btn-primary" data-target="#myModal">新增资源</button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    新增资源
+                </h4>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <th>上级资源:</th>
+                        <td><select type="text" id="parentResourceId" class="selectpicker"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>资源名称:</th>
+                        <td><input type="text" id="resourceName"></td>
+                    </tr>
+                    <tr>
+                        <th>资源编码:</th>
+                        <td><input type="text" id="resourceCode"></td>
+                    </tr>
+                    <tr>
+                        <th>资源路径:</th>
+                        <td><input type="text" id="resourceUrl"></td>
+                    </tr>
+                    <tr>
+                        <th>资源类型:</th>
+                        <td><input type="text" id="resourceType"></td>
+                    </tr>
+                        <th>启用状态:</th>
+                        <td><input type="text" id="isAvailable"></td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="add">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<table id="resourceTable"></table>
+<input type="hidden" id="hiddenParentId"/>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    $(document).ready(function () {
+
+        var tabObj = new TableObj();
+        tabObj.initTable();
+        selectResource();
+        $("#add").click(function () {
+            $.ajax({
+                url : "/resource/saveReource",
+                type : "POST",
+                data : JSON.stringify({
+                    //上级资源Id
+                    parentRsourceId : $("#parentRsourceId").val(),
+                    //资源名称
+                    resourceName : $("#resourceName").val(),
+                    // 资源编码
+                    resourceCode : $("#resourceCode").val(),
+                    //资源路径
+                    resourceUrl : $("#resourceUrl").val(),
+                    //资源类型
+                    resourceType : $("#resourceType").val(),
+                    //启用状态
+                    isAvailable : $("#isAvailable").val()
+                }),
+                contentType : "application/json",
+                success : function (result) {
+                     if (result == 'true') {
+                         window.top.location = "jump/getResourceList";
+                     }
+                },
+                error :function (result) {
+
+                }
+            });
+        });
+
+
+    })
+
+    function selectResource() {
+        $.ajax({
+            url : "/resource/selectResource",
+            type : "GET",
+            contentType : "application/json",
+            success : function (result) {
+                if (result != ""){
+                    debugger;
+                    result = JSON.parse(result);
+                    var table = "";
+                    for (var i = 0; i < result.length; i++) {
+                        table +="<option value='"+result[i].id+"'>"+ result[i].name + "</option>>";
+                    }
+                    $("#parentResourceId").append(table);
+                }
+            },
+            error : function (result) {
+
+            }
+        })
+
+
+
+    }
+
+
+    var TableObj = function () {
+        var initObj = new Object();
+        initObj.initTable = function () {
+            $("#resourceTable").bootstrapTable("destroy");
+            $("#resourceTable").bootstrapTable({
+                url: "/resource/getResourcePage",
+                method: "POST",
+                contentType: "application/json",
+                toolbar: "#toolbar",
+                pagination: true,                   //是否显示分页（*）
+                sortable: false,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParamsType: "limit",
+                queryParams: initObj.queryParams,       //传递参数（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber: 1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                detailView: true,
+                columns: [{
+                    field: "seq",
+                    title: "序号"
+                    },{
+                        field: "resourceName",
+                        title: "资源名称"
+                    }, {
+                        field: "parentResourceName",
+                        title: "上级资源名称"
+                    }, {
+                        field: "resourceCode",
+                        title: "资源编码"
+                    }, {
+                        field: "resourceUrl",
+                        title: "资源路径"
+                    }, {
+                        field: "resourceType",
+                        title: "资源类型"
+                    },{
+
+                }],
+                onExpandRow : function (index, row, $detail) {
+                    var expandTable = new childTable();
+                    expandTable.initTable(index, row, $detail);
+                }
+            });
+        };
+        initObj.queryParams = function (params) {
+                var temp = {
+                    pageSize: params.limit,
+                    currentPage: params.offset
+                };
+                return JSON.stringify(temp);
+            };
+        return initObj;
+    }
+
+    var childTable = function () {
+        var initChildTable = new Object();
+        initChildTable.initTable = function (index, row, $detail) {
+            $("#hiddenParentId").val(row.id);
+            var cur_table = $detail.html('<table></table>').find('table');
+            $(cur_table).bootstrapTable("destroy");
+            $(cur_table).bootstrapTable({
+                url: "/resource/getResourcePage",
+                method: "POST",
+                contentType: "application/json",
+                toolbar: "#toolbar",
+                pagination: true,                   //是否显示分页（*）
+                sortable: false,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParamsType: "limit",
+                queryParams: initChildTable.queryParams,//传递参数（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber: 1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                detailView: true,
+                columns: [{
+                    field: "seq",
+                    title: "序号"
+                },{
+                    field: "resourceName",
+                    title: "资源名称"
+                }, {
+                    field: "parentResourceName",
+                    title: "上级资源名称"
+                }, {
+                    field: "resourceCode",
+                    title: "资源编码"
+                }, {
+                    field: "resourceUrl",
+                    title: "资源路径"
+                }, {
+                    field: "resourceType",
+                    title: "资源类型"
+                }],
+                onExpandRow : function (index, row, $detail) {
+                    var expandTable = new childTable();
+                    expandTable.initTable(index, row, $detail);
+                }
+            });
+        };
+        initChildTable.queryParams = function (params) {
+            var temp = {
+                pageSize: params.limit,
+                currentPage: params.offset,
+                parentRsourceId : $("#hiddenParentId").val()
+            }
+            return JSON.stringify(temp);
+        }
+        return initChildTable;
+    }
+
+
+
+</script>
+</body>
+</html>

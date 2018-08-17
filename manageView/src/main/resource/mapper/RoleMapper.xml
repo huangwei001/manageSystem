@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.springBoot.manageView.service.mybaties.RoleMapper">
+
+    <resultMap id="roleMap" type="com.test.springBoot.manageApi.entity.TRole">
+        <result column="id" property="id"></result>
+        <result column="name" property="name"></result>
+        <result column="createName" property="creatName"></result>
+        <result column="createTime" property="creatTime"></result>
+        <result column="updateName" property="updateName"></result>
+        <result column="updateTime" property="updateTime"></result>
+    </resultMap>
+
+    <insert id="saveRole" parameterType="com.test.springBoot.manageApi.conditionEntity.RoleCondition">
+        insert into T_ROLE (ID,NAME,CREATNAME,CREATTIME ,UPDATENAME,UPDATETIME, DELETEFLAG)
+        values (#{id},#{name}.#{creatname},#{creattime},#{updatename},#{updatetime},#{deleteflag}）
+    </insert>
+
+    <select id="getPageRoleByCondition" parameterType="Map" resultMap="roleMap">
+      select * from T_ROLE where delete_flag = 0
+    </select>
+
+    <update id="updateRole" parameterType="com.test.springBoot.manageApi.conditionEntity.RoleCondition">
+        update T_ROLE set name = #{name},
+                         UPDATENAME = #{UPDATENAME},
+                         UPDATETIME = #{UPDATETIME}
+                          where id = #{id}
+
+    </update>
+
+    <delete id="deleteRole" parameterType="String">
+        delete from T_ROLE where id = #{id}
+    </delete>
+
+</mapper>

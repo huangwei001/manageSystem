@@ -6,16 +6,28 @@
 </head>
 <body>
 
-
-<button id="userList"  data-toggle="modal" class="btn btn-primary" data-target="#myModal">用户列表</button>
+<ul>
+    <li>
+        <button id="userSetting"  data-toggle="modal" class="btn btn-primary" data-target="#myModal">用户管理</button>
+    </li>
+    <li>
+        <button id="resourceSetting"  data-toggle="modal" class="btn btn-primary" data-target="#myModal">资源管理</button>
+    </li>
+</ul>
 <div th:include="include :: footer"></div>
 <script th:inline="javascript">
 
         $(document).ready(function () {
-            $("#userList").click(function () {
+            $("#userSetting").click(function () {
                 window.location.href = "/jump/getUserList";
             });
+
+            $("#resourceSetting").click(function () {
+                window.location.href = "/jump/getResourceList";
+            });
         })
+
+
 </script>
 </body>
 </html>

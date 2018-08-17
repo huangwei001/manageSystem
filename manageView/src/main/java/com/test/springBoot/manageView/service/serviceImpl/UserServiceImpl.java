@@ -8,6 +8,7 @@ import com.test.springBoot.manageView.service.mybaties.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
         }
         userCondition.setId(UUID.randomUUID().toString());
         userCondition.setSeq(++seq);
+        userCondition.setCreatTime(new Date().getTime());
         userMapper.saveUser(userCondition);
         return userCondition.getId();
     }

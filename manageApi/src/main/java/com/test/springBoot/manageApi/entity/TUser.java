@@ -11,7 +11,7 @@ public class TUser extends BaseEntity{
 
     private String email;
 
-    private String gender ;
+    private String gender;
 
     private String tel;
 

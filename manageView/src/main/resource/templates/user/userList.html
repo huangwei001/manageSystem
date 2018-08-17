@@ -19,21 +19,21 @@
                 <table>
                     <tr>
                         <th>用户名:</th>
-                        <td><input type="text"></td>
+                        <td><input type="text" id="loginName"></td>
                         <th>密码:</th>
-                        <td><input type="text"></td>
+                        <td><input type="text" id="password"></td>
                     </tr>
                     <tr>
                         <th>真实姓名:</th>
-                        <td><input type="text"></td>
+                        <td><input type="text" id="name"></td>
                         <th>年龄:</th>
-                        <td><input type="text"></td>
+                        <td><input type="text" id="old"></td>
                     </tr>
                     <tr>
                         <th>电话:</th>
-                        <td><input type="text"></td>
+                        <td><input type="text" id="tel"></td>
                         <th>邮箱:</th>
-                        <td><input type="text"></td>
+                        <td><input type="text" id="email"></td>
                     </tr>
 
                 </table>
@@ -52,16 +52,23 @@
 <div th:include="include :: footer"></div>
 <script th:inline="javascript">
 
-
     $(document).ready(function () {
+
+        //注册列表并加载列表
+        var oTable = new TableInit();
+        oTable.Init();
+        //注册用户添加方法
         $("#add").click(function () {
             $.ajax({
                 url : "/user/saveUser",
                 type : "POST",
                 data : JSON.stringify({
-                    name : "aaa",
-                    loginName : "aaa",
-                    passWord : "aaa"
+                    name : $("#name").val(),
+                    loginName : $("#loginName").val(),
+                    passWord : $("#password").val(),
+                    old : $("#old").val(),
+                    email : $("#email").val(),
+                    tel : $("#tel").val()
                 }),
                 contentType : "application/json",
                 success :function (result) {
@@ -75,8 +82,7 @@
 
             });
         });
-        var oTable = new TableInit();
-        oTable.Init();
+
     })
 
 
@@ -100,7 +106,7 @@
                 pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
                 columns: [{
                     field : "seq",
-                    title : "排序"
+                    title : "序号"
                 },
                     {
                     field : "name",
