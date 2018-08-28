@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="caseservice-201808171052" author="huangwei" context="base">
+        <sql>
+            ALTER TABLE t_role ADD STATUS VARCHAR(1) NULL COMMENT '状态';
+        </sql>
+    </changeSet>
+
+
+    <changeSet id="caseservice-201808241338" author="huangwei" context="base">
+        <sql>
+            ALTER TABLE t_role ADD RESOURCEIDS VARCHAR(4000) NULL COMMENT '资源ID串';
+        </sql>
+    </changeSet>
+
+    <changeSet id="caseservice-201808271647" author="huangwei" context="base">
+        <sql>
+            ALTER TABLE t_user ADD ROLEIDS VARCHAR(4000) NULL COMMENT '角色ID串';
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

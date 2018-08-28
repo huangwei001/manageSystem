@@ -21,6 +21,8 @@ public class TUser extends BaseEntity{
 
     private Integer seq;
 
+    private String roleIds;
+
     public TUser(String id) {
         super(id);
     }

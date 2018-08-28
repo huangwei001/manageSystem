@@ -10,14 +10,15 @@
         <result column="name" property="name"></result>
         <result column="old" property="old"></result>
         <result column="tel" property="tel"></result>
+        <result column="roleIds" property="roleIds"></result>
     </resultMap>
 
 
     <insert id="saveUser" parameterType="com.test.springBoot.manageApi.conditionEntity.UserCondition">
 
-      insert into T_USER (ID,NAME,OLD,EAMIL,GENDER,TEL,LOGINNAME,PASSWORD,CREATNAME,CREATTIME,UPDATENAME,UPDATETIME,DELETEFLAG,SEQ)
+      insert into T_USER (ID,NAME,OLD,EAMIL,GENDER,TEL,LOGINNAME,PASSWORD,CREATNAME,CREATTIME,UPDATENAME,UPDATETIME,DELETEFLAG,SEQ,ROLEIDS)
 
-      values (#{id},#{name},#{old},#{email},#{gender},#{tel},#{loginName},#{passWord},#{creatName},#{creatTime},#{updateName},#{updateTime},#{deleteFlag},#{seq})
+      values (#{id},#{name},#{old},#{email},#{gender},#{tel},#{loginName},#{passWord},#{creatName},#{creatTime},#{updateName},#{updateTime},#{deleteFlag},#{seq},#{roleIds})
 
     </insert>
 

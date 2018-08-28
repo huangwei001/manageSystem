@@ -20,5 +20,6 @@ public interface ResourceService {
 
     public String selectResource() throws Exception;
 
+    public String getResourceTree() throws Exception;
 
 }

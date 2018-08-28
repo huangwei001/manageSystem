@@ -13,6 +13,9 @@
     <li>
         <button id="resourceSetting"  data-toggle="modal" class="btn btn-primary" data-target="#myModal">资源管理</button>
     </li>
+    <li>
+        <button id="roleSetting"  data-toggle="modal" class="btn btn-primary" data-target="#myModal">角色管理</button>
+    </li>
 </ul>
 <div th:include="include :: footer"></div>
 <script th:inline="javascript">
@@ -24,6 +27,10 @@
 
             $("#resourceSetting").click(function () {
                 window.location.href = "/jump/getResourceList";
+            });
+
+            $("#roleSetting").click(function () {
+                window.location.href = "/jump/getRoleList";
             });
         })
 

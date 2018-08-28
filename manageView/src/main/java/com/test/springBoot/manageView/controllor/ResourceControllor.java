@@ -28,7 +28,7 @@ public class ResourceControllor {
     @PostMapping(value = "saveReource")
     public String saveMenu(@RequestBody final ResourceCondition resourceCondition) throws Exception{
         String result = resourceService.saveResource(resourceCondition);
-        if (StringUtils.isAllEmpty(result)) {
+        if (!StringUtils.isAllEmpty(result)) {
             return "true";
         }
         return null;

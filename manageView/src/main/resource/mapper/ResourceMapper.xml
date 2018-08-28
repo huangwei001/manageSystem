@@ -4,7 +4,7 @@
 
     <resultMap id="resourceMap" type="com.test.springBoot.manageApi.entity.TResource">
         <result column="RESOURCE_NAME" property="resourceName"></result>
-        <result column="PARENT_RSOURCE_ID" property="parentRsourceId"></result>
+        <result column="PARENT_RSOURCE_ID" property="parentResourceId"></result>
         <result column="PARENT_RESOURCE_NAME" property="parentResourceName"></result>
         <result column="ISAVAILABLE" property="isAvailable"></result>
         <result column="RESOURCE_TYPE" property="resourceType"></result>
@@ -15,13 +15,18 @@
 
     <insert id="saveResource" parameterType="com.test.springBoot.manageApi.conditionEntity.ResourceCondition">
       insert into T_RESOURCE (ID,RESOURCE_NAME,PARENT_RSOURCE_ID,PARENT_RESOURCE_NAME,ISAVAILABLE,RESOURCE_TYPE,RESOURCE_URL,RESOURCE_CODE,CREATNAME,CREATTIME,UPDATENAME,UPDATETIME,DELETEFLAG)
-        values (#{id},#{resourceName},#{parentRsourceId},#{parentResourceName},#{isAvailable},#{resourceType},#{resourceUrl},#{resourceCode},#{creatName},#{creatTime},#{updateName},#{updateTime},#{deleteFlag})
+        values (#{id},#{resourceName},#{parentResourceId},#{parentResourceName},#{isAvailable},#{resourceType},#{resourceUrl},#{resourceCode},#{creatName},#{creatTime},#{updateName},#{updateTime},#{deleteFlag})
     </insert>
 
     <select id="getPageResourceByCondition" parameterType="com.test.springBoot.manageApi.conditionEntity.ResourceCondition" resultMap="resourceMap">
         select * from T_RESOURCE  where deleteFlag = 0
-        <if test="parentRsourceId != null and parentRsourceId != ''">
-            and PARENT_RSOURCE_ID = #{parentRsourceId}
+
+        <if test="parentResourceId == null or parentResourceId == ''">
+            and PARENT_RSOURCE_ID is null
+        </if>
+
+        <if test="parentResourceId != null and parentResourceId != ''">
+            and PARENT_RSOURCE_ID = #{parentResourceId}
         </if>
         limit #{limit}, #{pageSize}
     </select>
@@ -37,4 +42,36 @@
     <select id="selectResource" resultMap="resourceMap">
         select * from T_RESOURCE where deleteFlag = 0
     </select>
+
+    <select id="getResourceByParentId" parameterType="String" resultMap="resourceMap">
+        select * from T_RESOURCE where deleteFlag = 0
+        <if test="parentId == null or parentId == ''">
+            and PARENT_RSOURCE_ID is null
+        </if>
+        <if test="parentId != null and parentId != ''">
+            and PARENT_RSOURCE_ID = #{parentId}
+        </if>
+    </select>
+
+    <select id="getConutByCondition" parameterType="com.test.springBoot.manageApi.conditionEntity.ResourceCondition" resultType="integer">
+        select count(*) from T_RESOURCE  where deleteFlag = 0
+
+        <if test="parentResourceId == null or parentResourceId == ''">
+            and PARENT_RSOURCE_ID is null
+        </if>
+
+        <if test="parentResourceId != null and parentResourceId != ''">
+            and PARENT_RSOURCE_ID = #{parentResourceId}
+        </if>
+    </select>
+
+    <select id="getResourceNameByResourceIds" resultMap="resourceMap">
+         select * from T_RESOURCE  where deleteFlag = 0
+        and id in
+        <foreach collection="resourceIds"  item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </select>
+
 </mapper>

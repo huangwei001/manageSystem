@@ -3,8 +3,11 @@ package com.test.springBoot.manageApi.conditionEntity;
 import com.test.springBoot.manageApi.entity.TRole;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class RoleCondition extends TRole {
+
 
     private int currentPage;
 

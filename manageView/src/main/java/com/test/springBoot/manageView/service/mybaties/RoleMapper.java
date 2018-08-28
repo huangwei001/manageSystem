@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface RoleMapper {
 
-    public String saveRole(RoleCondition roleCondition) throws Exception;
+    public void saveRole(RoleCondition roleCondition) throws Exception;
 
     public List<TRole> getPageRoleByCondition(RoleCondition roleCondition) throws Exception;
 
@@ -19,10 +19,9 @@ public interface RoleMapper {
 
     public void deleteRole(@Param("id") String id);
 
+    public Integer getCountByCondition(RoleCondition roleCondition) throws Exception;
 
-
-
-
+    public List<TRole> getAllRole() throws Exception;
 
 
 }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.test.springBoot.manageApi.Utils.Page;
 import com.test.springBoot.manageApi.conditionEntity.UserCondition;
 import com.test.springBoot.manageApi.entity.TUser;
+import com.test.springBoot.manageApi.service.RolesService;
 import com.test.springBoot.manageApi.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class UserControllor {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RolesService rolesService;
 
     @PostMapping(value = "/getUser")
     public String getUser(@RequestBody final UserCondition userCondition) throws Exception{
@@ -39,4 +42,8 @@ public class UserControllor {
         return null;
     }
 
+    @PostMapping(value = "/getAllRole")
+    public String getAllRole() throws Exception {
+        return rolesService.getAllRole();
+    }
 }

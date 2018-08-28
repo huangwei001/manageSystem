@@ -20,4 +20,10 @@ public interface ResourceMapper {
 
     public List<TResource> selectResource() throws Exception;
 
+    public List<TResource> getResourceByParentId(@Param("parentId") String parentId) throws Exception;
+
+    public Integer getConutByCondition(ResourceCondition resourceCondition) throws Exception;
+
+    public List<TResource> getResourceNameByResourceIds(@Param("resourceIds") List<String> resourceIds) throws Exception;
+
 }

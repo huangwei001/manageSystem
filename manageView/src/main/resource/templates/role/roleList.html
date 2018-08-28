@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="include :: head">
+    <title>角色管理</title>
+    <meta charset="utf-8">
+</head>
+<body>
+<button id="back"  class="btn btn-primary text-left">返回</button>
+<button id="addRole"  data-toggle="modal" class="btn btn-primary text-right" data-target="#myModal">新增角色</button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    新增角色
+                </h4>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <th>角色名称:</th>
+                        <td style="width: 170px"><input type="text" id="name"></td>
+                    </tr>
+                    <tr>
+                        <th>启用状态:</th>
+                        <td><input type="radio" name="status" value="0">启用<input type="radio" name="status" value="1">禁用</td>
+                    </tr>
+                    <tr>
+                        <th>资源授权</th>
+                        <td>
+                            <ul id="resourceTree" class="ztree" style="max-height:300px;width:auto; overflow-y:scroll;"></ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="add">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<table id="roleTable" data-toggle="table"></table>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+
+
+    var setting = {
+        view : {
+            showLine: false,
+            selectedMulti: false
+        },
+        check : {
+            enable: true
+        },
+        data:{
+            //是否套用简单数据格式，自动生成结构图
+            simpleData:{
+                //开启简单数据
+                enable:true,
+                //节点id
+                idKey:"id",
+                //父节点
+                pIdKey:"pId"
+            }
+        }
+    }
+
+    $(document).ready(function () {
+        var table = new TableObject();
+        table.initFunction();
+        $("#addRole").click(function () {
+            $.ajax({
+                url : "/role/getResourceTree",
+                type : "POST",
+                contentType : "application/json",
+                success : function (result) {
+                    if (result != null && result != "") {
+                        result = JSON.parse(result);
+                       $.fn.zTree.init($("#resourceTree"), setting, result);
+                    }
+                },
+                error : function () {
+
+                }
+            })
+        });
+
+        $("#add").click(function () {
+            var treeObj = $.fn.zTree.getZTreeObj("resourceTree");
+            var nodes = treeObj.getCheckedNodes(true);
+            if (nodes != null) {
+                var resourceIds = "";
+                for (var i = 0; i < nodes.length; i++) {
+                    resourceIds += nodes[i].id + ","
+                }
+            }
+            $("input[name='status']:checked").val();
+            $.ajax({
+                url : "/role/saveRole",
+                type : "POST",
+                contentType : "application/json",
+                data : JSON.stringify({
+                    name : $("#name").val(),
+                    status : $("input[name='status']:checked").val(),
+                    resourceIds : resourceIds
+                }),
+                success : function (result) {
+                    if (result == "true") {
+                        window.location.href = "/jump/getRoleList";
+                    }
+                },
+                error : function () {
+
+                }
+            })
+        });
+        $("#back").click(function () {
+            window.location.href = "/jump/jumpFile"
+        });
+    })
+
+
+    var TableObject = function () {
+        var initTable = new Object();
+        initTable.initFunction = function () {
+            $("#roleTable").bootstrapTable("destroy");
+            $("#roleTable").bootstrapTable({
+                url: "/role/getRolePage",
+                method: "POST",
+                contentType: "application/json",
+                toolbar: "#toolbar",
+                pagination: true,                   //是否显示分页（*）
+                sortable: false,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParamsType: "limit",
+                queryParams: initTable.queryParams,       //传递参数（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber: 1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                columns: [{
+                    field: "seq",
+                    title: "序号"
+                },{
+                    field: "name",
+                    title: "角色名称"
+                }, {
+                    field: "resourceNames",
+                    title: "资源权限"
+                },{
+                    field: "status",
+                    title: "状态",
+                    formatter : function (value, row, index) {
+                        if (value == '1') {
+                            return "禁用"
+                        }else {
+                            return "启用"
+                        }
+                    }
+                }],
+                onClickRow : function (row,$element) {
+                    $(".popover").hide();
+                    $($element.find("td")[1]).popover({
+                        trigger:'click', //触发方式
+                        title:"角色详情",//设置 弹出框 的标题
+                        html: true, // 为true的话，data-content里就能放html代码了
+                        content:showDetail(row),//这里可以直接写字符串，也可以 是一个函数，该函数返回一个字符串；
+                    })
+
+                }
+            })
+        };
+        initTable.queryParams = function (params) {
+            var temp = {
+                pageSize: params.limit,
+                currentPage: params.offset
+            };
+            return JSON.stringify(temp);
+        };
+        return initTable;
+    }
+
+    function showDetail(row) {
+        var ulstring="<table>";
+            ulstring +="                    <tr>";
+            ulstring +="                        <th>角色名称:</th>" ;
+            ulstring +="                        <td style=\"width: 170px\">"+row.name+"</td>" ;
+            ulstring +="                    </tr>" ;
+            ulstring +="                    <tr>" ;
+            ulstring +="                        <th>启用状态:</th>" ;
+                    if(row.status == "1") {
+                        ulstring +="                        <td>禁用</td>";
+                    }else {
+                        ulstring += "                        <td>启用</td>";
+                    }
+            ulstring +="                    </tr>" ;
+            ulstring +="                    <tr>" ;
+            ulstring +="                        <th>资源授权</th>" ;
+            ulstring +="                        <td>" + row.resourceNames;
+            ulstring +="                        </td>" ;
+            ulstring +="                    </tr>" ;
+            ulstring +="            </table>";
+        return ulstring;
+    }
+</script>
+</body>
+</html>

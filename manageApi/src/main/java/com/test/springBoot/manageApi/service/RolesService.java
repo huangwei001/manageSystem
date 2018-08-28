@@ -15,4 +15,5 @@ public interface RolesService {
 
     public void deleteRole(@Param("id") String id);
 
+    public String getAllRole() throws Exception;
 }

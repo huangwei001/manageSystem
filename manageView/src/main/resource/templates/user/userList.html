@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>用户列表</title>
 </head>
-
+<button id="back"  class="btn btn-primary text-left">返回</button>
 <button id="addUser"  data-toggle="modal" class="btn btn-primary" data-target="#myModal">新增用户</button>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -18,13 +18,13 @@
             <div class="modal-body">
                 <table>
                     <tr>
-                        <th>用户名:</th>
+                        <th style="width: 50px">用户名:</th>
                         <td><input type="text" id="loginName"></td>
                         <th>密码:</th>
                         <td><input type="text" id="password"></td>
                     </tr>
                     <tr>
-                        <th>真实姓名:</th>
+                        <th>姓名:</th>
                         <td><input type="text" id="name"></td>
                         <th>年龄:</th>
                         <td><input type="text" id="old"></td>
@@ -35,7 +35,12 @@
                         <th>邮箱:</th>
                         <td><input type="text" id="email"></td>
                     </tr>
-
+                    <tr>
+                        <th>角色:</th>
+                        <td colspan="2">
+                            <div id="roleDiv" > </div>
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div class="modal-footer">
@@ -53,12 +58,18 @@
 <script th:inline="javascript">
 
     $(document).ready(function () {
-
+        $("#back").click(function () {
+            window.location.href = "/jump/jumpFile"
+        });
         //注册列表并加载列表
         var oTable = new TableInit();
         oTable.Init();
         //注册用户添加方法
         $("#add").click(function () {
+            var roleIds = "";
+            $("input[name='role']:checked").each(function () {
+                roleIds += $(this).val() + ",";
+            });
             $.ajax({
                 url : "/user/saveUser",
                 type : "POST",
@@ -68,12 +79,35 @@
                     passWord : $("#password").val(),
                     old : $("#old").val(),
                     email : $("#email").val(),
-                    tel : $("#tel").val()
+                    tel : $("#tel").val(),
+                    roleIds : roleIds
                 }),
                 contentType : "application/json",
                 success :function (result) {
                     if (result == "true") {
                         window.top.location = "/jump/getUserList"
+                    }
+                },
+                error : function (result) {
+
+                }
+
+            });
+        });
+
+        $("#addUser").click(function () {
+            $.ajax({
+                url : "/user/getAllRole",
+                type : "POST",
+                contentType : "application/json",
+                success : function (result) {
+                    if (result != null && result != "") {
+                        result = JSON.parse(result);
+                        var roles = "";
+                        for (var i = 0; i< result.length; i++) {
+                            roles +="<input type='checkbox' name='role' value='"+result[i].id+"'>" + result[i].name;
+                        }
+                        $("#roleDiv").html(roles);
                     }
                 },
                 error : function (result) {

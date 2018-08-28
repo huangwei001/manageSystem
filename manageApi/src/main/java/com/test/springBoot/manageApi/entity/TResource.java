@@ -7,7 +7,7 @@ public class TResource extends BaseEntity{
     //资源名称
     private String resourceName;
     //上级资源Id
-    private String parentRsourceId;
+    private String parentResourceId;
     //上级资源名称(冗余)
     private String parentResourceName;
     // 资源编码

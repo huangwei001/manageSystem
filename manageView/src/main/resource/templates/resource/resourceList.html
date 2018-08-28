@@ -5,6 +5,7 @@
     <title>菜单列表</title>
 </head>
 <body>
+<button id="back"  class="btn btn-primary text-left">返回</button>
 <button id="addUser"  data-toggle="modal" class="btn btn-primary" data-target="#myModal">新增资源</button>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -19,7 +20,7 @@
                 <table>
                     <tr>
                         <th>上级资源:</th>
-                        <td><select type="text" id="parentResourceId" class="selectpicker"></select>
+                        <td style="width: 170px"><select style="width: 170px;" type="text" id="parentResourceId"></select>
                         </td>
                     </tr>
                     <tr>
@@ -66,7 +67,7 @@
                 type : "POST",
                 data : JSON.stringify({
                     //上级资源Id
-                    parentRsourceId : $("#parentRsourceId").val(),
+                    parentResourceId : $("#parentResourceId").val(),
                     //资源名称
                     resourceName : $("#resourceName").val(),
                     // 资源编码
@@ -81,7 +82,7 @@
                 contentType : "application/json",
                 success : function (result) {
                      if (result == 'true') {
-                         window.top.location = "jump/getResourceList";
+                         window.location.href="/jump/getResourceList";
                      }
                 },
                 error :function (result) {
@@ -90,6 +91,13 @@
             });
         });
 
+        $("#addUser").click(function () {
+            selectResource();
+        });
+
+        $("#back").click(function () {
+            window.location.href = "/jump/jumpFile"
+        });
 
     })
 
@@ -106,7 +114,7 @@
                     for (var i = 0; i < result.length; i++) {
                         table +="<option value='"+result[i].id+"'>"+ result[i].name + "</option>>";
                     }
-                    $("#parentResourceId").append(table);
+                    $("#parentResourceId").html(table);
                 }
             },
             error : function (result) {
@@ -225,7 +233,7 @@
             var temp = {
                 pageSize: params.limit,
                 currentPage: params.offset,
-                parentRsourceId : $("#hiddenParentId").val()
+                parentResourceId : $("#hiddenParentId").val()
             }
             return JSON.stringify(temp);
         }

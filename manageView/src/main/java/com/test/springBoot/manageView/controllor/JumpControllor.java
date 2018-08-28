@@ -10,8 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class JumpControllor {
 
     //用户页面跳转
-    @RequestMapping(value = "/getUserList", method = RequestMethod.GET)
+    @RequestMapping(value = "/jumpFile", method = RequestMethod.GET)
     public String getList() throws Exception {
+        return "system/jumpFile";
+    }
+    //用户页面跳转
+    @RequestMapping(value = "/getUserList", method = RequestMethod.GET)
+    public String getUserList() throws Exception {
         return "user/userList";
     }
     //资源页面跳转
@@ -20,6 +25,11 @@ public class JumpControllor {
         return "resource/resourceList";
     }
 
+    @RequestMapping(value = "getRoleList", method = RequestMethod.GET)
+    public String getRoleList() throws Exception {
 
+        return "role/roleList";
+
+    }
 
 }

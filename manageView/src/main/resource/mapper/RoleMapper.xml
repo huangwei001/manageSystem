@@ -5,6 +5,7 @@
     <resultMap id="roleMap" type="com.test.springBoot.manageApi.entity.TRole">
         <result column="id" property="id"></result>
         <result column="name" property="name"></result>
+        <result column="status" property="status"></result>
         <result column="createName" property="creatName"></result>
         <result column="createTime" property="creatTime"></result>
         <result column="updateName" property="updateName"></result>
@@ -12,12 +13,14 @@
     </resultMap>
 
     <insert id="saveRole" parameterType="com.test.springBoot.manageApi.conditionEntity.RoleCondition">
-        insert into T_ROLE (ID,NAME,CREATNAME,CREATTIME ,UPDATENAME,UPDATETIME, DELETEFLAG)
-        values (#{id},#{name}.#{creatname},#{creattime},#{updatename},#{updatetime},#{deleteflag}）
+        insert into T_ROLE (ID,NAME,STATUS,RESOURCEIDS,CREATNAME,CREATTIME ,UPDATENAME,UPDATETIME, DELETEFLAG)
+        values (#{id},#{name},#{status},#{resourceIds},#{creatName},#{creatTime},#{updateName},#{updateTime},#{deleteFlag})
     </insert>
 
     <select id="getPageRoleByCondition" parameterType="Map" resultMap="roleMap">
-      select * from T_ROLE where delete_flag = 0
+      select * from T_ROLE role where deleteflag = 0
+
+      limit #{limit}, #{pageSize}
     </select>
 
     <update id="updateRole" parameterType="com.test.springBoot.manageApi.conditionEntity.RoleCondition">
@@ -32,4 +35,12 @@
         delete from T_ROLE where id = #{id}
     </delete>
 
+
+    <select id="getCountByCondition" resultType="integer" parameterType="com.test.springBoot.manageApi.conditionEntity.RoleCondition">
+        select count(*) from T_ROLE where deleteflag = 0
+    </select>
+
+    <select id="getAllRole" resultMap="roleMap">
+        select * from T_ROLE role where deleteflag = 0
+    </select>
 </mapper>
