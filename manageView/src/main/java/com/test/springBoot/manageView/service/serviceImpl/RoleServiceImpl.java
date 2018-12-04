@@ -9,6 +9,7 @@ import com.test.springBoot.manageApi.entity.TRole;
 import com.test.springBoot.manageApi.service.RolesService;
 import com.test.springBoot.manageView.service.mybaties.ResourceMapper;
 import com.test.springBoot.manageView.service.mybaties.RoleMapper;
+import lombok.experimental.var;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
