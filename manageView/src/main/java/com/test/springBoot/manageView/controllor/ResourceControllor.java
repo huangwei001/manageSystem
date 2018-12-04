@@ -5,7 +5,8 @@ import com.test.springBoot.manageApi.Utils.Page;
 import com.test.springBoot.manageApi.conditionEntity.ResourceCondition;
 import com.test.springBoot.manageApi.entity.TResource;
 import com.test.springBoot.manageApi.service.ResourceService;
-import org.apache.commons.lang3.StringUtils;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class ResourceControllor {
     @PostMapping(value = "saveReource")
     public String saveMenu(@RequestBody final ResourceCondition resourceCondition) throws Exception{
         String result = resourceService.saveResource(resourceCondition);
-        if (!StringUtils.isAllEmpty(result)) {
+        if (!StringUtils.isEmpty(result)) {
             return "true";
         }
         return null;

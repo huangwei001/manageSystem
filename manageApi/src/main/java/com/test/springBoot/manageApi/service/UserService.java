@@ -3,8 +3,7 @@ package com.test.springBoot.manageApi.service;
 import com.test.springBoot.manageApi.Utils.Page;
 import com.test.springBoot.manageApi.conditionEntity.UserCondition;
 import com.test.springBoot.manageApi.entity.TUser;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.support.WebExchangeBindException;
+
 
 
 public interface UserService {

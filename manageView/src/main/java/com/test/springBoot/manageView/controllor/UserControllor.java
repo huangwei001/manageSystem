@@ -6,7 +6,7 @@ import com.test.springBoot.manageApi.conditionEntity.UserCondition;
 import com.test.springBoot.manageApi.entity.TUser;
 import com.test.springBoot.manageApi.service.RolesService;
 import com.test.springBoot.manageApi.service.UserService;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +36,7 @@ public class UserControllor {
     @PostMapping(value = "/saveUser")
     public String saveUser(@RequestBody final UserCondition userCondition) throws Exception {
         String result = userService.saveUser(userCondition);
-        if (!StringUtils.isAllEmpty(result)) {
+        if (!StringUtils.isEmpty(result)) {
             return "true";
         }
         return null;

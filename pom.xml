@@ -10,7 +10,7 @@
   <modules>
     <module>manageView</module>
     <module>manageApi</module>
-      </modules>
+    </modules>
   <packaging>pom</packaging>
 
   <name>manageSystem</name>
@@ -18,7 +18,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.0.3.RELEASE</version>
+    <version>1.5.3.RELEASE</version>
   </parent>
 
   <properties>
@@ -39,6 +39,8 @@
     <kaptcha.version>2.3.2</kaptcha.version>
     <swagger.version>2.7.0</swagger.version>
     <jsoup.version>1.11.3</jsoup.version>
+    <common.version>3.8.1</common.version>
+    <scheduler.version>2.2.1</scheduler.version>
   </properties>
 
   <dependencies>
@@ -55,6 +57,19 @@
           </exclusion>
       </exclusions>
        -->
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-eureka</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-eureka-server</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-config</artifactId>
     </dependency>
 
     <!-- SpringBoot 测试 -->
@@ -130,6 +145,7 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
+      <version>${common.version}</version>
     </dependency>
 
     <!--io常用工具类 -->
@@ -198,6 +214,7 @@
     <dependency>
       <groupId>org.quartz-scheduler</groupId>
       <artifactId>quartz</artifactId>
+      <version>${scheduler.version}</version>
       <exclusions>
         <exclusion>
           <groupId>com.mchange</groupId>
@@ -271,8 +288,38 @@
 
   </dependencies>
 
-
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>Dalston.RC1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <build>
     <finalName>manageSystem</finalName>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+    <plugin>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-maven-plugin</artifactId>
+    </plugin>
+    </plugins>
+    </pluginManagement>
   </build>
+
+
+  <repositories>
+    <repository>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <url>https://repo.spring.io/milestone</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 </project>

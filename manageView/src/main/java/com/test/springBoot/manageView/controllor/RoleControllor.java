@@ -6,7 +6,7 @@ import com.test.springBoot.manageApi.conditionEntity.RoleCondition;
 import com.test.springBoot.manageApi.entity.TRole;
 import com.test.springBoot.manageApi.service.ResourceService;
 import com.test.springBoot.manageApi.service.RolesService;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +35,7 @@ public class RoleControllor {
     @PostMapping(value = "/saveRole")
     public String saveRole(@RequestBody final RoleCondition roleCondition) throws Exception {
         String result = rolesService.saveRole(roleCondition);
-        if (!StringUtils.isAllEmpty(result)) {
+        if (!StringUtils.isEmpty(result)) {
             return "true";
         }
         return null;

@@ -9,13 +9,12 @@ import com.test.springBoot.manageApi.entity.TRole;
 import com.test.springBoot.manageApi.service.RolesService;
 import com.test.springBoot.manageView.service.mybaties.ResourceMapper;
 import com.test.springBoot.manageView.service.mybaties.RoleMapper;
-import lombok.experimental.var;
-import org.apache.commons.lang3.StringUtils;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +46,7 @@ public class RoleServiceImpl implements RolesService {
         List<TRole> roles = roleMapper.getPageRoleByCondition(roleCondition);
         List<TRole> currentRoles = new ArrayList<>();
         for (TRole role : roles) {
-            if (!StringUtils.isAllEmpty(role.getResourceIds())) {
+            if (!StringUtils.isEmpty(role.getResourceIds())) {
                 String[] ids = role.getResourceIds().split(",");
                 List<String> resourceIds = new ArrayList<>();
                 for (String id : ids) {
@@ -58,7 +57,7 @@ public class RoleServiceImpl implements RolesService {
                 for (TResource resource : resources) {
                     resourceName += resource.getResourceName() + ",";
                 }
-                if (!StringUtils.isAllEmpty(resourceName)) {
+                if (!StringUtils.isEmpty(resourceName)) {
                     resourceName = resourceName.substring(0, resourceName.length() - 1);
                 }
                 role.setResourceNames(resourceName);
